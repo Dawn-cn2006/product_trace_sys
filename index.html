@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>食品溯源-产品列表</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "微软雅黑", Arial, sans-serif;
+      background: #f8f9fa;
+      padding: 10px;
+    }
+    .container { max-width: 720px; margin: 0 auto; }
+    .header {
+      background: #2E7D32;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .header h1 { font-size: 22px; margin-bottom: 6px; }
+    .header p { font-size: 14px; opacity: 0.9; }
+    .list-card {
+      background: white;
+      margin-top: 15px;
+      padding: 18px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .item {
+      display: block;
+      padding: 15px;
+      margin: 10px 0;
+      background: #f0fdf4;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #222;
+      border: 1px solid #d1fae5;
+    }
+    .item:hover { background: #dcfce7; }
+    .item h3 { font-size: 18px; color: #2E7D32; margin-bottom: 5px; }
+    .item p { font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>食品二维码溯源系统</h1>
+      <p>一物一码 · 点击查看详情</p>
+    </div>
+    <div class="list-card" id="list">正在加载产品列表……</div>
+  </div>
+
+  <script>
+    async function loadList() {
+      const res = await fetch('products.json');
+      const list = await res.json();
+      let html = '';
+      list.forEach(p => {
+        html += `
+          <a href="detail.html?id=${p.id}" class="item">
+            <h3>${p.name}</h3>
+            <p>产地：${p.origin}</p>
+            <p>批次：${p.batch}</p>
+          </a>
+        `;
+      });
+      document.getElementById('list').innerHTML = html;
+    }
+    loadList();
+  </script>
+</body>
+</html>
